@@ -13,6 +13,7 @@ import {
 } from "react-native";
 // import apis from "../../utils/apis";
 import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Login({ navigation }: any) {
     const [username, setUserName] = useState("");
@@ -27,7 +28,6 @@ export default function Login({ navigation }: any) {
             Alert.alert("Error", "Please enter both username and password.");
             return;
         }
-
         setLoading(true);
 
         try {
@@ -41,6 +41,13 @@ export default function Login({ navigation }: any) {
             // console.log("API Response:", res.data); 
 
             if (res.data.state === "Success") {
+
+                await AsyncStorage.setItem('userData' , JSON.stringify({
+                    user_id: res.data.user_id,
+                    user_name: res.data.user_name,
+                    subscription_state: res.data.subscription_state
+                }))
+
                 navigation.navigate("Dashboard");
                 setUserName("");
                 setPass("");
