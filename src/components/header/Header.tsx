@@ -1,15 +1,43 @@
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet, Modal, SafeAreaView } from 'react-native';
-
+import { View, Text, Image, TouchableOpacity, StyleSheet, Modal, SafeAreaView, Alert } from 'react-native';
 
 export default function Header() {
+    const myNavigation = useNavigation<any>();
     const [menuVisible, setMenuVisible] = useState(false);
+
 
     const toggleMenu = () => {
         setMenuVisible(!menuVisible);
     };
 
+
+
+
+    const handleLogOut = async () => {
+        Alert.alert(
+            "Confirm Logout",
+            "Are you sure you want to log out?",
+            [
+                { text: "Cancel", style: "cancel" },
+                {
+                    text: "Yes",
+                    onPress: async () => {
+                        try {
+                            await AsyncStorage.removeItem('userdata');  
+                            setMenuVisible(false);
+                            myNavigation.navigate('Login')
+                        } catch (error) {
+                            console.log('Error During Logout:', error);
+                            Alert.alert('Error', 'Failed to log out. Please try again.');
+                        }
+                    }
+                }
+            ]
+        );
+    };
 
     return (
         <>
@@ -59,9 +87,13 @@ export default function Header() {
                             <Text style={styles.menuItem}>About</Text>
                             <Text style={styles.menuItem}>Services</Text>
                             <Text style={styles.menuItem}>Contact</Text>
+                            <TouchableOpacity onPress={handleLogOut}>
+                                <Text style={styles.logout}>Logout</Text>
+                            </TouchableOpacity>
                         </View>
                     </SafeAreaView>
                 </Modal>
+
             </View>
         </>
     );
@@ -78,6 +110,16 @@ const styles = StyleSheet.create({
         fontSize: 22,
         textAlign: "center",
         fontWeight: "800",
+    },
+    logout: {
+        backgroundColor: "red",
+        fontSize: 22,
+        color: "#fff",
+        paddingVertical: 8,
+        paddingHorizontal: 12,
+        textAlign: "center",
+        borderRadius: 8
+
     },
     container: {
         flexDirection: 'row',
@@ -150,3 +192,4 @@ const styles = StyleSheet.create({
         borderBottomColor: '#eee',
     },
 })
+

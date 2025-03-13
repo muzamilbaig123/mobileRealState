@@ -1,6 +1,4 @@
 import { NavigationContainer } from "@react-navigation/native";
-import Footer from "./src/components/footer/Footer";
-import MyHeader from "./src/components/header/Header";
 import Login from "./src/components/Login/Login";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
