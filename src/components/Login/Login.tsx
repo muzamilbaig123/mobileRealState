@@ -183,12 +183,12 @@ const styles = StyleSheet.create({
     },
     btn: {
         backgroundColor: "#186DA3",
-        paddingVertical: 16,
-        paddingHorizontal: 40,
-        borderRadius: 50,
+        paddingVertical: 10,
+        paddingHorizontal: 24,
+        borderRadius: 4,
     },
     btnTxt: {
-        fontSize: 18,
+        fontSize: 20,
         color: "#fff",
     },
 });

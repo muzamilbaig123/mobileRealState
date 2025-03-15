@@ -193,9 +193,9 @@ const styles = StyleSheet.create({
         backgroundColor: "#2b80c1",
         paddingVertical: 8,
         paddingHorizontal: 22,
-        borderWidth: 2,
+        borderWidth: 1,
         borderColor: "#fff",
-        borderRadius: 8,
+        borderRadius: 4,
     },
     btnText: {
         color: "#fff",

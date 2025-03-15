@@ -48,14 +48,14 @@ const styles = StyleSheet.create({
     },
     btn: {
         backgroundColor: "#2b80c1",
-        paddingVertical: 12,
-        paddingHorizontal: 28,
-        borderWidth: 2,
+        paddingVertical: 10,
+        paddingHorizontal: 24,
+        borderWidth: 1,
         borderColor: "#fff",
-        borderRadius: 50,
+        borderRadius: 4,
     },
     btnText: {
         color: "#fff",
-        fontSize: 24,
+        fontSize: 20,
     }
 })
