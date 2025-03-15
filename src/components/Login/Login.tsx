@@ -1,19 +1,7 @@
-import React, { useState } from "react";
-import {
-    SafeAreaView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
-    KeyboardAvoidingView,
-    ScrollView,
-    Platform,
-    Alert,
-} from "react-native";
-// import apis from "../../utils/apis";
-import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import { useState } from "react";
+import { Alert, KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 export default function Login({ navigation }: any) {
     const [username, setUserName] = useState("");
@@ -21,54 +9,58 @@ export default function Login({ navigation }: any) {
     const [loading, setLoading] = useState(false);
 
 
-    const loginUser = `http://3.109.176.31/SeePrime/APIS/SELECT.php?select_id=select_users_by_name_and_pass&admin_portal=N&username=${username}&password=${pass}`
+    const loginUser = `http://3.109.176.31/SeePrime/APIS/SELECT.php?select_id=select_users_by_name_and_pass&admin_portal=N&username=${username}&password=${pass}`;
+
+
+
 
     const handleLogin = async () => {
         if (!username || !pass) {
             Alert.alert("Error", "Please enter both username and password.");
             return;
         }
-        setLoading(true);
+        setLoading(true)
 
         try {
+
             const res = await axios.get(loginUser, {
                 params: {
-                    username: username, // Use `username` if the API expects it
-                    password: pass, // Use `password` if the API expects it
-                },
+                    username: username,
+                    password: pass,
+                }
             });
 
-            // console.log("API Response:", res.data); 
 
             if (res.data.state === "Success") {
 
-                await AsyncStorage.setItem('userData' , JSON.stringify({
-                    user_id: res.data.user_id,
+                await AsyncStorage.setItem('userData', JSON.stringify({
+                    user_id: res.data.user_id, 
                     user_name: res.data.user_name,
-                    subscription_state: res.data.subscription_state
-                }))
+                    subscription_state: res.data.subscription_state 
+                }));
 
-                navigation.navigate("Dashboard");
+                navigation.navigate("Dashboard")
                 setUserName("");
                 setPass("");
-            } else {
-                throw new Error(res.data.message || "Invalid username or password.");
-
             }
+            else {
+                throw new Error(res.data.message || "Invalid username and password!.")
+            }
+
         } catch (e: any) {
             if (axios.isAxiosError(e)) {
-                console.log("API Error Response:", e.response?.data); // Log the error response
-                Alert.alert("Error", e.response?.data?.message || "Login Failed. Please check your credentials.");
-            } else {
+                Alert.alert("Error", e.response?.data?.message || "Login Failed. Please Check Your Credentials")
+            }
+            else{
                 Alert.alert("Error", e.message || "Unexpected error occurred. Please try again later.");
             }
+
         } finally {
-            setLoading(false);
+            setLoading(false)
         }
-    };
 
-
-
+    }
+    
     return (
         <>
             <SafeAreaView style={styles.topbar}>
@@ -108,13 +100,7 @@ export default function Login({ navigation }: any) {
                             <TouchableOpacity onPress={handleLogin} style={styles.btn} disabled={loading}>
                                 <Text style={styles.btnTxt}>{loading ? "Logging in..." : "Login"}</Text>
                             </TouchableOpacity>
-        
-                        {/* {loading ? null :
-                            <TouchableOpacity onPressIn={handleLogin} style={styles.btn} disabled={loading}>
-                                <Text style={styles.btnTxt}>Login</Text>
-                            </TouchableOpacity>
-                        } */}
-                        
+
                         </View>
                     </View>
                 </ScrollView>
@@ -124,8 +110,12 @@ export default function Login({ navigation }: any) {
                 <Text style={styles.footTxt}>Copyright © 2024 RCS llc All rights reserved</Text>
             </View>
         </>
-    );
+    )
 }
+
+
+
+
 
 const styles = StyleSheet.create({
     topbar: {

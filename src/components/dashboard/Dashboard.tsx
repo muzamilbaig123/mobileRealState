@@ -47,7 +47,6 @@ export default function Dashboard() {
     useEffect(() => {
         fetchData();
         loginFectData();
-        Alert.alert("Hellossasas")
     }, []);
 
     // Render each row of the table
